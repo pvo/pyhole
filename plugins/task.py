@@ -16,8 +16,10 @@
 
 import os
 import readline
+import re
 import subprocess as sub
 from pyhole import plugin
+
 
 class Task(plugin.Plugin):
     """Provide access to task manager"""
@@ -29,7 +31,13 @@ class Task(plugin.Plugin):
             verb = params.split()[0]
             source = self.irc.source.split("!")[0]
             params = "%s project:%s" % (params,source)
-            self._run(params)
+            # r = re.compile("(.* mainline .*)")
+            # m = r.search(response.read())
+            for w in ['list', 'add', '^\d+']:
+                r = re.compile(w)
+                m = r.search(verb)
+                if m:
+                    self._run(params)
         else:
             result = self.task.__doc__
 
