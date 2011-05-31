@@ -29,15 +29,17 @@ class Task(plugin.Plugin):
             verb = params.split()[0]
             source = self.irc.source.split("!")[0]
             params = "%s project:%s" % (params,source)
-            exec(params)
+            self._run(params)
         else:
             result = self.task.__doc__
 
-    def _exec (self, params):
+    def _run (self, params):
+        source = self.irc.source.split("!")[0]
+        params = "%s project:%s" % (params,source)
+        
         try:
-            self.irc.reply(params)
             cmd = "/usr/bin/task"
-            p = sub.Popen([cmd] + query, stdout=sub.PIPE,stderr=sub.PIPE)
+            p = sub.Popen([cmd] + params.split(), stdout=sub.PIPE,stderr=sub.PIPE)
             result, error = p.communicate()
         except EOFError:
             self.irc.reply("can't find task binary")
