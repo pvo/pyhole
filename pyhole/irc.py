@@ -153,7 +153,7 @@ class IRC(irclib.SimpleIRCClient):
                 return
 
         msg = msg.encode("utf-8").split("\n")
-        if len(msg) > self.max_lines
+        if len(msg) > self.max_lines:
             msg = msg[0:self.max_lines-1]
             msg.append('...')
         for line in msg:
