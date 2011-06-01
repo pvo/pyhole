@@ -151,9 +151,10 @@ class IRC(irclib.SimpleIRCClient):
                 return
 
         msg = msg.encode("utf-8").split("\n")
-        new_msg = [0:9]
-        new_msg.append('...')
-        for line in new_msg:
+        if len(msg) > self.max_length
+            msg = msg[0:self.max_length-1]
+            msg.append('...')
+        for line in msg:
             if self.addressed:
                 source = self.source.split("!")[0]
                 self.connection.privmsg(self.target, "%s: %s" % (source, line))
